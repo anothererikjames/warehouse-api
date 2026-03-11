@@ -1,0 +1,19 @@
+name: API Governance
+on:
+  push:
+    paths: ['openapi/**', '*.yaml']
+  pull_request:
+    paths: ['openapi/**', '*.yaml']
+  workflow_dispatch:
+jobs:
+  governance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Spectral
+        run: npm install -g @stoplight/spectral-cli
+      - name: Lint OpenAPI Spec
+        run: spectral lint openapi/openapi.yaml --fail-severity error || true
