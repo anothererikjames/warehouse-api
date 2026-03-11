@@ -1,0 +1,63 @@
+openapi: '3.0.3'
+info:
+  title: Warehouse API
+  version: 1.2.0
+  description: Inventory and warehouse management service
+  contact:
+    name: Warehouse Team
+    email: warehouse@acme.com
+paths:
+  /inventory:
+    get:
+      summary: List inventory items
+      operationId: listInventory
+      tags: [Inventory]
+      responses:
+        '200':
+          description: Inventory list
+  /inventory/{sku}:
+    get:
+      summary: Get item by SKU
+      operationId: getItemBySku
+      tags: [Inventory]
+      parameters:
+        - name: sku
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Item details
+    put:
+      summary: Update stock
+      operationId: updateStock
+      tags: [Inventory]
+      parameters:
+        - name: sku
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Stock updated
+  /warehouses:
+    get:
+      summary: List warehouses
+      operationId: listWarehouses
+      tags: [Warehouses]
+      responses:
+        '200':
+          description: Warehouses list
+  /shipments:
+    post:
+      summary: Create shipment
+      operationId: createShipment
+      tags: [Shipments]
+      responses:
+        '201':
+          description: Shipment created
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
